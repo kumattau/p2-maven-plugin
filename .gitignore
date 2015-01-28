@@ -45,3 +45,11 @@ target
 
 src/site/markdown/*.*
 category.xml
+
+test-output
+
+.classpath
+.project
+.travis
+.groovy
+.settings
