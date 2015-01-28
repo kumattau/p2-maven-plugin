@@ -191,6 +191,16 @@ public class P2Mojo extends AbstractMojo implements Contextualizable {
     private File featuresDestinationFolder;
 
     /**
+     * Naming convention
+     */
+    @Parameter(defaultValue = "default")
+    private String namingConvension;
+
+    public String getNamingConvension() {
+        return namingConvension;
+    }
+
+    /**
      * Processing entry point.
      * Method that orchestrates the execution of the plugin.
      */
@@ -265,6 +275,7 @@ public class P2Mojo extends AbstractMojo implements Contextualizable {
         Multimap<P2Artifact, ResolvedArtifact> resolvedArtifacts = ArrayListMultimap.create();
         for (P2Artifact p2Artifact : artifacts) {
             logResolving(p2Artifact);
+            p2Artifact.setP2Mojo(this);
             ArtifactResolutionResult resolutionResult = resolveArtifact(p2Artifact);
             resolvedArtifacts.putAll(p2Artifact, resolutionResult.getResolvedArtifacts());
         }
@@ -275,6 +286,7 @@ public class P2Mojo extends AbstractMojo implements Contextualizable {
         Multimap<P2Artifact, ResolvedArtifact> resolvedArtifacts = ArrayListMultimap.create();
         for (P2Artifact p2Artifact : features) {
             logResolving(p2Artifact);
+            p2Artifact.setP2Mojo(this);
             ArtifactResolutionResult resolutionResult = resolveArtifact(p2Artifact);
             resolvedArtifacts.putAll(p2Artifact, resolutionResult.getResolvedArtifacts());
         }

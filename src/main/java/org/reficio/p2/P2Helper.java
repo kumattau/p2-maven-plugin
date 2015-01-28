@@ -116,6 +116,21 @@ public class P2Helper {
             symbolicName = symbolicNameValue != null ? symbolicNameValue.toString() : null;
         }
         if (symbolicName == null) {
+            String groupId = resolvedArtifact.getArtifact().getGroupId();
+            String artifactId = resolvedArtifact.getArtifact().getArtifactId();
+            String namingConvension = p2Artifact.getP2Mojo().getNamingConvension();
+
+            if (namingConvension.equals("artifactId")) {
+                if (artifactId != null && !artifactId.isEmpty()) {
+                    symbolicName = artifactId;
+                }
+            } else if (namingConvension.equals("groupId.artifactId")) {
+                if (groupId != null && !groupId.isEmpty() && artifactId != null && !artifactId.isEmpty()) {
+                    symbolicName = groupId + "." + artifactId;
+                }
+            }
+        }
+        if (symbolicName == null) {
             symbolicName = BundleUtils.INSTANCE.getBundleSymbolicName(new Jar(resolvedArtifact.getArtifact().getFile()));
         }
         if (symbolicName == null) {

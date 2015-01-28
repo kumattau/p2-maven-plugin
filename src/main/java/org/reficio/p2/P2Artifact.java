@@ -69,6 +69,11 @@ public class P2Artifact {
      */
     private Map instructions = new LinkedHashMap();
 
+    /**
+     * Reference to P2Mojo object
+     */
+    private P2Mojo p2Mojo = null;
+
     public P2Artifact() {
     }
 
@@ -122,6 +127,14 @@ public class P2Artifact {
 
     public void setExcludes(List<String> excludes) {
         this.excludes = excludes;
+    }
+
+    public P2Mojo getP2Mojo() {
+        return p2Mojo;
+    }
+
+    public void setP2Mojo(P2Mojo p2Mojo) {
+        this.p2Mojo = p2Mojo;
     }
 
 }
