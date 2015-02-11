@@ -19,7 +19,10 @@
 package org.reficio.p2.bundler.impl;
 
 import aQute.lib.osgi.Analyzer;
+import aQute.lib.osgi.Builder;
+import aQute.lib.osgi.Instruction;
 import aQute.lib.osgi.Jar;
+
 import org.apache.commons.io.FileUtils;
 import org.reficio.p2.bundler.ArtifactBundlerInstructions;
 import org.reficio.p2.bundler.ArtifactBundlerRequest;
@@ -49,6 +52,7 @@ public class AquteHelper {
         // they are set later as they may overwrite some instructions
         setBundleOptions(analyzer, instructions);
         setManifest(analyzer);
+        addIncludedResources(analyzer);
         return analyzer;
     }
 
@@ -102,4 +106,9 @@ public class AquteHelper {
         analyzer.mergeManifest(analyzer.getJar().getManifest());
     }
 
+    private static void addIncludedResources(Analyzer analyzer) throws Exception {
+        Builder builder = new Builder(analyzer);
+        analyzer.getJar().addAll(builder.build(), Instruction.getPattern("!META-INF/MANIFEST\\.MF"));
+        builder.close();
+    }
 }
